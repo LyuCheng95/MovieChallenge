@@ -1,6 +1,9 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import movies from '../data/movies.json';
+import moviesData from '../data/movies.json';
+
+import type { Movie } from './types/movie';
+const movies: Movie[] = moviesData as unknown as Movie[];
 
 const app = express();
 const port = 3001;

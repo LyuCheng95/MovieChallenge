@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import Movies from './components/Movies.vue'
-</script>
-
 <template>
   <div>
     <a href="https://vite.dev" target="_blank">
@@ -11,10 +6,18 @@ import Movies from './components/Movies.vue'
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
+    <nav>
+      <router-link :to="{ name: 'Home' }">Home</router-link> |
+      <router-link :to="{ name: 'SearchResults' }">Search Results</router-link> |
+      <router-link :to="{ name: 'Details' }">Details</router-link>
+    </nav>
+    <router-view></router-view>
   </div>
-  <HelloWorld msg="Vite + Vue" />
-  <Movies />
 </template>
+
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
 
 <style scoped>
 .logo {
