@@ -1,23 +1,15 @@
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+import Header from './components/Header.vue'; 
+</script>
+
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-    <nav>
-      <router-link :to="{ name: 'Home' }">Home</router-link> |
-      <router-link :to="{ name: 'SearchResults' }">Search Results</router-link> |
-      <router-link :to="{ name: 'Details' }">Details</router-link>
-    </nav>
+  <Header />
+  <div style="margin-top: 60px;">
     <router-view></router-view>
   </div>
 </template>
 
-<script setup lang="ts">
-import { RouterLink } from 'vue-router'
-</script>
 
 <style scoped>
 .logo {
