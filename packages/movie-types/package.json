@@ -1,0 +1,21 @@
+{
+  "name": "@lyuch000/movie-types",
+  "version": "1.0.0",
+  "description": "Shared movie types for frontend and backend",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "movie",
+    "types",
+    "typescript"
+  ],
+  "author": "Lyu Cheng",
+  "license": "ISC",
+  "files": [
+    "dist"
+  ]
+}

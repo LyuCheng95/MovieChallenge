@@ -1,0 +1,27 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Genres = void 0;
+var Genres;
+(function (Genres) {
+    Genres[Genres["Comedy"] = 0] = "Comedy";
+    Genres[Genres["Fantasy"] = 1] = "Fantasy";
+    Genres[Genres["Crime"] = 2] = "Crime";
+    Genres[Genres["Drama"] = 3] = "Drama";
+    Genres[Genres["Music"] = 4] = "Music";
+    Genres[Genres["Adventure"] = 5] = "Adventure";
+    Genres[Genres["History"] = 6] = "History";
+    Genres[Genres["Thriller"] = 7] = "Thriller";
+    Genres[Genres["Family"] = 8] = "Family";
+    Genres[Genres["Animation"] = 9] = "Animation";
+    Genres[Genres["Mystery"] = 10] = "Mystery";
+    Genres[Genres["Biography"] = 11] = "Biography";
+    Genres[Genres["Action"] = 12] = "Action";
+    Genres[Genres["Sci-Fi"] = 13] = "Sci-Fi";
+    Genres[Genres["War"] = 14] = "War";
+    Genres[Genres["Romance"] = 15] = "Romance";
+    Genres[Genres["Western"] = 16] = "Western";
+    Genres[Genres["Horror"] = 17] = "Horror";
+    Genres[Genres["Musical"] = 18] = "Musical";
+    Genres[Genres["Sport"] = 19] = "Sport";
+    Genres[Genres["Film-Noir"] = 20] = "Film-Noir";
+})(Genres || (exports.Genres = Genres = {}));

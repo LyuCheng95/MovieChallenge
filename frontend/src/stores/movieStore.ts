@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { Movie } from "../types/movie";
+import type { Movie } from "@lyuch000/movie-types";
 
 export const useMovieStore = defineStore("movieStore", {
   state: () => ({
