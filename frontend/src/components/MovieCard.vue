@@ -1,11 +1,10 @@
 <template>
-  <div class="movie-card">
+  <div class="movie-card" @click="goToDetails">
     <div class="card-content">
       <img
-        :src="movie.posterUrl"
+        :src="posterUrl"
         :alt="movie.title"
         @error="handleImageError"
-        ref="posterImage"
         class="movie-poster"
       />
       <div class="movie-info">
@@ -21,25 +20,33 @@
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import placeholderImage from "../assets/poster-placeholder.webp";
+
+// types
 import type { Movie } from "../types/movie";
+
+const router = useRouter();
 
 const props = defineProps<{
   movie: Movie;
 }>();
 
-const posterImage = ref<HTMLImageElement | null>(null);
+const goToDetails = () => {
+  router.push({
+    name: "MovieDetails",
+    params: { id: props.movie.id },
+  });
+};
+
+const isImageError = ref(false);
 
 const handleImageError = () => {
-  if (posterImage.value) {
-    posterImage.value.src = placeholderImage;
-  }
+  isImageError.value = true;
 };
 
 const posterUrl = computed(() => {
-  return posterImage.value && posterImage.value.src !== props.movie.posterUrl
-    ? placeholderImage
-    : props.movie.posterUrl;
+  return isImageError.value ? placeholderImage : props.movie.posterUrl;
 });
 </script>
 

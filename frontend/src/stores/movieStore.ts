@@ -51,5 +51,9 @@ export const useMovieStore = defineStore("movieStore", {
     displayedMovies(): Movie[] {
       return this.searchMovies();
     },
+    getMovieById: (state) => {
+      return (id: number) =>
+        state.movies.find((movie) => movie.id === id) || null;
+    },
   },
 });
