@@ -35,8 +35,8 @@ const slides = [
   {
     id: 2,
     image:
-      "https://i0.wp.com/literariness.org/wp-content/uploads/2021/02/wp4119629.jpg",
-    alt: "The Lord of the Rings: The Return of the King",
+      "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D2AF0F20D40CAAA249BEF5BDFF63C1BF3F6BDB67C74092DB843AEAEB423F79D2/scale?width=1200&aspectRatio=1.78&format=webp",
+    alt: "Alice in Wonderland",
   },
   {
     id: 3,

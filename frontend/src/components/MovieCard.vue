@@ -1,60 +1,69 @@
 <template>
-  <div class="movie-card" @click="navigateToDetails">
-    <div
-      class="card-content"
-      :style="{ backgroundImage: `url(${movie.image})` }"
-    >
+  <div class="movie-card">
+    <div class="card-content">
+      <img
+        :src="movie.posterUrl"
+        :alt="movie.title"
+        @error="handleImageError"
+        ref="posterImage"
+        class="movie-poster"
+      />
       <div class="movie-info">
         <h3>{{ movie.title }}</h3>
-        <p>{{ movie.year }}</p>
-        <p>{{ movie.director }}</p>
+        <div class="additional-info">
+          <p>{{ movie.year }}</p>
+          <p>{{ movie.director }}</p>
+        </div>
       </div>
-    </div>
-    <div class="movie-title">
-      <h3>{{ movie.title }}</h3>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed } from "vue";
+import placeholderImage from "../assets/poster-placeholder.webp";
+import type { Movie } from "../types/movie";
 
 const props = defineProps<{
-  movie: {
-    id: number;
-    title: string;
-    year: number;
-    director: string;
-    image: string;
-  };
+  movie: Movie;
 }>();
 
-const router = useRouter();
+const posterImage = ref<HTMLImageElement | null>(null);
 
-const navigateToDetails = () => {
-  router.push(`/movie/${props.movie.id}`);
+const handleImageError = () => {
+  if (posterImage.value) {
+    posterImage.value.src = placeholderImage;
+  }
 };
+
+const posterUrl = computed(() => {
+  return posterImage.value && posterImage.value.src !== props.movie.posterUrl
+    ? placeholderImage
+    : props.movie.posterUrl;
+});
 </script>
 
 <style scoped>
 .movie-card {
   width: 100%;
-  height: 400px;
-  overflow: hidden;
+  position: relative;
   border-radius: 8px;
+  overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .card-content {
-  flex-grow: 1;
-  background-size: cover;
-  background-position: center;
+  height: 300px;
   position: relative;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .movie-info {
@@ -65,34 +74,37 @@ const navigateToDetails = () => {
   background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 10px;
-  transform: translateY(100%);
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-  opacity: 0;
+  transition: all 0.3s ease;
 }
 
-.movie-card:hover .movie-info {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.movie-title {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 10px 15px;
+.movie-info h3 {
+  margin: 0;
+  font-size: 1.2em;
   text-align: center;
 }
 
-.movie-title h3 {
-  margin: 0;
-  font-size: 1em;
-  white-space: nowrap;
+.additional-info {
+  max-height: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
+  transition: max-height 0.3s ease;
+}
+
+.additional-info p {
+  margin: 5px 0 0;
+  font-size: 0.9em;
+  text-align: center;
 }
 
 .movie-card:hover {
   transform: scale(1.2);
+  z-index: 1;
+}
+
+.movie-card:hover .movie-info {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.movie-card:hover .additional-info {
+  max-height: 100px;
 }
 </style>

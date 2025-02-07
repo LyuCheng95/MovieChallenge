@@ -1,37 +1,55 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
+import type { Movie } from "../types/movie";
 
-export const useMovieStore = defineStore('movieStore', {
-    state: () => ({
-        movies: [] as any[],
-        searchQuery: ''
-    }),
-    actions: {
-        async fetchMovies() {
-            try {
-                const response = await fetch('http://localhost:3001/api/movies')
-                const result = await response.json()
-                console.log('ch000', result);
-                this.movies = result.movies;
-            } catch (error) {
-                console.error('Error fetching movies:', error)
-            }
-        },
-        searchMovies() {
-            if (this.searchQuery === '') {
-                return this.movies
-            } else {
-                return this.movies.filter((movie: any) => {
-                    return movie.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                        (movie.director && movie.director.toLowerCase().includes(this.searchQuery.toLowerCase()))
-                })
-            }
-        }
+export const useMovieStore = defineStore("movieStore", {
+  state: () => ({
+    movies: [] as Movie[],
+    searchQuery: "",
+    currentPage: 1,
+    hasMore: true,
+  }),
+  actions: {
+    async fetchMovies() {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/movies/paged?page=${this.currentPage}&pageSize=50`,
+        );
+        const result = await response.json();
+        this.movies = [...this.movies, ...result.movies];
+        this.hasMore = result.hasMore;
+        this.currentPage++;
+        return this.movies;
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+        return [];
+      }
     },
-    // 计算属性
-    getters: {
-        // 获取过滤后的电影列表
-        displayedMovies(): any[] {
-            return this.searchMovies()
-        }
-    }
-})
+    searchMovies() {
+      if (this.searchQuery === "") {
+        return this.movies;
+      } else {
+        return this.movies.filter((movie: Movie) => {
+          return (
+            movie.title
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase()) ||
+            (movie.director &&
+              movie.director
+                .toLowerCase()
+                .includes(this.searchQuery.toLowerCase()))
+          );
+        });
+      }
+    },
+    resetPagination() {
+      this.movies = [];
+      this.currentPage = 1;
+      this.hasMore = true;
+    },
+  },
+  getters: {
+    displayedMovies(): Movie[] {
+      return this.searchMovies();
+    },
+  },
+});
