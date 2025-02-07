@@ -7,6 +7,7 @@ export const useMovieStore = defineStore("movieStore", {
     searchQuery: "",
     currentPage: 1,
     hasMore: true,
+    suggestions: [] as string[],
   }),
   actions: {
     async fetchMovies() {
@@ -45,6 +46,26 @@ export const useMovieStore = defineStore("movieStore", {
       this.movies = [];
       this.currentPage = 1;
       this.hasMore = true;
+    },
+    async fetchSuggestions(query: string) {
+      if (query.trim()) {
+        try {
+          console.log("ch000 fetch");
+          const response = await fetch(
+            `http://localhost:3001/api/autofill?q=${query}`,
+          );
+          const data = await response.json();
+          this.suggestions = data;
+        } catch (error) {
+          console.error("Error fetching suggestions:", error);
+          this.suggestions = [];
+        }
+      } else {
+        this.suggestions = [];
+      }
+    },
+    clearSuggestions() {
+      this.suggestions = [];
     },
   },
   getters: {

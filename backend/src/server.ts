@@ -39,6 +39,40 @@ app.get("/api/movies/search", (req: Request, res: Response) => {
   res.json(filteredMovies);
 });
 
+app.get("/api/autofill", (req: express.Request, res: express.Response) => {
+  const query = ((req.query.q as string) || "").toLowerCase();
+  const limit = parseInt(req.query.limit as string) || 10;
+
+  if (!query) {
+    res.json([]);
+    return;
+  }
+
+  const matchedKeywords = new Set<string>();
+
+  moviePool.movies.forEach((movie) => {
+    if (movie.title.toLowerCase().includes(query)) {
+      matchedKeywords.add(movie.title);
+    }
+
+    if (movie.director.toLowerCase().includes(query)) {
+      matchedKeywords.add(movie.director);
+    }
+
+    movie.actors.split(", ").forEach((actor) => {
+      if (actor.toLowerCase().includes(query)) {
+        matchedKeywords.add(actor);
+      }
+    });
+  });
+
+  const suggestions = Array.from(matchedKeywords)
+    .slice(0, limit)
+    .sort((a, b) => a.localeCompare(b));
+
+  res.json(suggestions);
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
