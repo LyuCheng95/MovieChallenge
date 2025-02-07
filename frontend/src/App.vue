@@ -1,29 +1,20 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import Header from './components/Header.vue'; 
 </script>
 
 <template>
   <Header />
-  <div style="margin-top: 60px;">
+  <div class="body">
     <router-view></router-view>
   </div>
 </template>
 
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.body {
+  padding-top: 60px;
+  width: 100%;
+  background-color: #121212;
+  font-family: Arial, sans-serif;
 }
 </style>
