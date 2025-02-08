@@ -46,7 +46,7 @@ onMounted(async () => {
 .home-page {
   width: 100%;
   box-sizing: border-box;
-  background-color: black;
+  background-color: #121212;
   color: white;
   padding: 0;
   margin: 0;

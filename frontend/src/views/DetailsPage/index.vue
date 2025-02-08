@@ -38,7 +38,7 @@ import { useRoute } from "vue-router";
 import placeholderImage from "../../assets/poster-placeholder.webp";
 import { useMovieStore } from "../../stores/movieStore";
 
-import type { Movie } from "../../types/movie";
+import type { Movie } from "@lyuch000/movie-types";
 
 const route = useRoute();
 const movie = ref<Movie | null>(null);

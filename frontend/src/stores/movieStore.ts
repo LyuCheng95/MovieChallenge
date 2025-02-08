@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import type { Movie } from "@lyuch000/movie-types";
+import type { Genres, Movie } from "@lyuch000/movie-types";
+import type { SortOrder } from "../types/SortOrder";
 
 export const useMovieStore = defineStore("movieStore", {
   state: () => ({
@@ -8,6 +9,8 @@ export const useMovieStore = defineStore("movieStore", {
     currentPage: 1,
     hasMore: true,
     suggestions: [] as string[],
+    searchResults: [] as Movie[],
+    originalResults: [] as Movie[],
   }),
   actions: {
     async fetchMovies() {
@@ -25,21 +28,22 @@ export const useMovieStore = defineStore("movieStore", {
         return [];
       }
     },
-    searchMovies() {
-      if (this.searchQuery === "") {
-        return this.movies;
-      } else {
-        return this.movies.filter((movie: Movie) => {
-          return (
-            movie.title
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            (movie.director &&
-              movie.director
-                .toLowerCase()
-                .includes(this.searchQuery.toLowerCase()))
-          );
-        });
+    async searchMovies(keyword: string) {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/movies/search?query=${encodeURIComponent(
+            keyword,
+          )}`,
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        this.searchResults = data;
+        this.originalResults = data;
+      } catch (error) {
+        console.error("Error searching movies:", error);
+        this.searchResults = [];
       }
     },
     resetPagination() {
@@ -50,7 +54,6 @@ export const useMovieStore = defineStore("movieStore", {
     async fetchSuggestions(query: string) {
       if (query.trim()) {
         try {
-          console.log("ch000 fetch");
           const response = await fetch(
             `http://localhost:3001/api/autofill?q=${query}`,
           );
@@ -66,6 +69,31 @@ export const useMovieStore = defineStore("movieStore", {
     },
     clearSuggestions() {
       this.suggestions = [];
+    },
+    filterSearchResultByGenre(genre: Genres | "") {
+      if (!genre) {
+        this.searchResults = [...this.originalResults];
+      } else {
+        this.searchResults = this.originalResults.filter((movie) =>
+          movie.genres.includes(genre),
+        );
+      }
+    },
+
+    sortSearchResultByYear(order: SortOrder) {
+      const sortedResults = [...this.searchResults];
+
+      if (order === "asc") {
+        sortedResults.sort((a, b) => Number(a.year) - Number(b.year));
+      } else if (order === "desc") {
+        sortedResults.sort((a, b) => Number(b.year) - Number(a.year));
+      }
+
+      this.searchResults = sortedResults;
+    },
+    setSearchResults(results: Movie[]) {
+      this.searchResults = results;
+      this.originalResults = [...results];
     },
   },
   getters: {

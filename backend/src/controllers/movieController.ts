@@ -13,15 +13,15 @@ export const getAllMovies = (req: Request, res: Response) => {
   res.json(movies);
 };
 
-export const searchMovies = (req: Request, res: Response) => {
-  const query = req.query.query as string;
-  const filteredMovies = movieService.searchMovies(query);
-  res.json(filteredMovies);
-};
-
 export const getAutofillSuggestions = (req: Request, res: Response) => {
   const query = (req.query.q as string) || "";
   const limit = parseInt(req.query.limit as string) || 10;
   const suggestions = movieService.getAutofillSuggestions(query, limit);
   res.json(suggestions);
+};
+
+export const searchMovies = (req: Request, res: Response) => {
+  const query = req.query.query as string;
+  const results = movieService.searchMovies(query);
+  res.json(results);
 };

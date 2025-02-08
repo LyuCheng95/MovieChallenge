@@ -24,7 +24,7 @@ import { useRouter } from "vue-router";
 import placeholderImage from "../assets/poster-placeholder.webp";
 
 // types
-import type { Movie } from "../types/movie";
+import type { Movie } from "@lyuch000/movie-types";
 
 const router = useRouter();
 

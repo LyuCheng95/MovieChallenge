@@ -1,5 +1,5 @@
 import moviesData from "../../data/movies.json";
-import { Movie } from "@lyuch000/movie-types";
+import { Genres, Movie } from "@lyuch000/movie-types";
 
 const moviePool = moviesData as unknown as { movies: Movie[] };
 
@@ -20,11 +20,20 @@ export const getAllMovies = () => {
 };
 
 export const searchMovies = (query: string) => {
-  return moviePool.movies.filter(
-    (movie) =>
-      movie.title.toLowerCase().includes(query.toLowerCase()) ||
-      movie.director.toLowerCase().includes(query.toLowerCase())
-  );
+  if (!query) {
+    return [];
+  }
+
+  const lowerQuery = query.toLowerCase();
+
+  return moviePool.movies.filter((movie) => {
+    return (
+      movie.genres.some((genre) => genre.toLowerCase().includes(lowerQuery)) ||
+      movie.actors.toLowerCase().includes(lowerQuery) ||
+      movie.director.toLowerCase().includes(lowerQuery) ||
+      movie.title.toLowerCase().includes(lowerQuery)
+    );
+  });
 };
 
 export const getAutofillSuggestions = (query: string, limit: number) => {

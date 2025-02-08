@@ -3,13 +3,14 @@
     <div class="header-content">
       <router-link to="/" class="logo">MovieChallenge</router-link>
       <div class="search-container">
-        <div class="search-input-wrapper">
+        <div class="search-input-wrapper" v-click-outside="hideSuggestions">
           <input
             type="text"
             placeholder="Search for movies..."
             v-model="movieStore.searchQuery"
             @input="debouncedAutofill"
             @keyup.enter="performSearch"
+            @keyup.esc="hideSuggestions"
           />
           <ul v-if="movieStore.suggestions.length > 0" class="suggestions-list">
             <li
@@ -30,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import debounce from "lodash/debounce";
 import { useMovieStore } from "../stores/movieStore";
@@ -42,10 +43,14 @@ const performSearch = () => {
   if (movieStore.searchQuery.trim()) {
     router.push({
       name: "SearchResults",
-      query: { q: movieStore.searchQuery },
+      query: { keyword: movieStore.searchQuery },
     });
     movieStore.clearSuggestions();
   }
+};
+
+const hideSuggestions = () => {
+  movieStore.clearSuggestions();
 };
 
 const debouncedAutofill = debounce(() => {
@@ -58,8 +63,31 @@ const selectSuggestion = (suggestion: string) => {
   performSearch();
 };
 
+const vClickOutside = {
+  mounted(el: HTMLElement, binding: any) {
+    el.clickOutsideEvent = (event: Event) => {
+      if (!(el === event.target || el.contains(event.target as Node))) {
+        binding.value();
+      }
+    };
+    document.addEventListener("click", el.clickOutsideEvent);
+  },
+  unmounted(el: HTMLElement) {
+    document.removeEventListener("click", el.clickOutsideEvent);
+  },
+};
+
+onMounted(() => {
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      hideSuggestions();
+    }
+  });
+});
+
 onUnmounted(() => {
   debouncedAutofill.cancel();
+  document.removeEventListener("keydown", hideSuggestions);
 });
 </script>
 
