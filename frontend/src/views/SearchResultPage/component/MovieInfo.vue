@@ -77,15 +77,12 @@ const highlightKeyword = (text: string) => {
     padding: 1rem;
   }
 
-  .movie-header {
-    flex-direction: column;
-    align-items: flex-start;
+  .movie-title {
+    font-size: 1.2rem;
   }
 
-  .movie-year {
-    font-size: 0.9rem;
-    margin-top: 0.25rem;
-    color: #ffffff;
+  .movie-detail {
+    font-size: 0.8rem;
   }
 }
 </style>

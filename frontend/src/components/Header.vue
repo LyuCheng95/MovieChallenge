@@ -161,26 +161,6 @@ input:focus {
   color: white;
 }
 
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .logo {
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  .search-container {
-    width: 100%;
-  }
-
-  input {
-    width: calc(100% - 50px);
-  }
-}
-
 .search-input-wrapper {
   position: relative;
 }
@@ -228,5 +208,64 @@ input:focus {
 
 .suggestions-list li:hover {
   background-color: #f0f0f0;
+}
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+  }
+
+  .logo {
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .search-container {
+    width: 100%;
+  }
+
+  .search-input-wrapper {
+    width: 100%;
+  }
+
+  input {
+    width: calc(100% - 50px);
+    font-size: 14px;
+  }
+
+  .search-button {
+    padding: 8px 12px;
+  }
+
+  .suggestions-list {
+    max-height: 150px;
+  }
+
+  .suggestions-list li {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 18px;
+  }
+
+  input {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .search-button {
+    padding: 6px 10px;
+  }
+
+  .suggestions-list li {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
 }
 </style>

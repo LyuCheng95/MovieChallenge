@@ -64,6 +64,7 @@ watch(() => route.query.keyword, performSearch);
   margin: 0 auto;
   padding: 2rem;
 }
+
 .tool-bar {
   display: flex;
   justify-content: space-around;
@@ -78,5 +79,16 @@ watch(() => route.query.keyword, performSearch);
   margin-bottom: 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #121212;
+}
+
+@media (max-width: 768px) {
+  .search-results {
+    padding: 1rem;
+    margin-top: 15vh;
+  }
+
+  .tool-bar {
+    top: 15vh;
+  }
 }
 </style>

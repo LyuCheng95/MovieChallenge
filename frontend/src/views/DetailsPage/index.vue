@@ -169,6 +169,10 @@ p {
 }
 
 @media (max-width: 768px) {
+  .movie-details {
+    margin-top: 15vh;
+  }
+
   .content {
     flex-direction: column;
     padding: 1rem;

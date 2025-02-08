@@ -1,8 +1,8 @@
 <template>
   <div class="home-page">
-    <MovieCarousel />
-    <HotMovies :movies="movies" />
-    <div ref="observer"></div>
+    <MovieCarousel class="movie-carousel" />
+    <HotMovies :movies="movies" class="hot-movies" />
+    <div ref="observer" class="observer"></div>
   </div>
 </template>
 
@@ -50,5 +50,41 @@ onMounted(async () => {
   color: white;
   padding: 0;
   margin: 0;
+}
+
+.movie-carousel {
+  width: 100%;
+  max-height: 70vh;
+  overflow: hidden;
+}
+
+.hot-movies {
+  padding: 2rem 1rem;
+}
+
+.observer {
+  height: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .movie-carousel {
+    max-height: 50vh;
+  }
+
+  .hot-movies {
+    padding: 1rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-carousel {
+    display: none;
+  }
+
+  .hot-movies {
+    padding: 0.5rem 0.25rem;
+    margin-top: 15vh;
+  }
 }
 </style>

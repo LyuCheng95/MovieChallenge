@@ -34,8 +34,9 @@ const goToDetails = () => {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   height: 250px;
-  width: 800px;
-  margin: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 10px auto;
 }
 
 .movie-card:hover {
@@ -46,6 +47,7 @@ const goToDetails = () => {
 @media (max-width: 768px) {
   .movie-card {
     flex-direction: column;
+    height: auto;
   }
 }
 </style>

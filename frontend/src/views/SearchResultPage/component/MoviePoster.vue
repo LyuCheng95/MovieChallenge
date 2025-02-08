@@ -26,6 +26,8 @@ const handleImageError = (event: Event) => {
 <style scoped>
 .poster-container {
   min-width: 150px;
+  width: 30%;
+  max-width: 200px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -43,6 +45,7 @@ const handleImageError = (event: Event) => {
 @media (max-width: 768px) {
   .poster-container {
     width: 100%;
+    max-width: none;
     height: 300px;
   }
 }
