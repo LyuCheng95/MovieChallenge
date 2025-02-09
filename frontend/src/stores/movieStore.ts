@@ -1,6 +1,10 @@
 import { defineStore } from "pinia";
 import type { Genres, Movie } from "@lyuch000/movie-types";
 import type { SortOrder } from "../types/SortOrder";
+import { env } from "../config";
+
+const host =
+  env === "dev" ? "http://localhost:3001" : "http://34.143.135.18:3001";
 
 export const useMovieStore = defineStore("movieStore", {
   state: () => ({
@@ -16,7 +20,7 @@ export const useMovieStore = defineStore("movieStore", {
     async fetchMovies() {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/movies/paged?page=${this.currentPage}&pageSize=50`,
+          `${host}/api/movies/paged?page=${this.currentPage}&pageSize=50`,
         );
         const result = await response.json();
         this.movies = [...this.movies, ...result.movies];
@@ -31,9 +35,7 @@ export const useMovieStore = defineStore("movieStore", {
     async searchMovies(keyword: string) {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/movies/search?query=${encodeURIComponent(
-            keyword,
-          )}`,
+          `${host}/api/movies/search?query=${encodeURIComponent(keyword)}`,
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -54,9 +56,7 @@ export const useMovieStore = defineStore("movieStore", {
     async fetchSuggestions(query: string) {
       if (query.trim()) {
         try {
-          const response = await fetch(
-            `http://localhost:3001/api/autofill?q=${query}`,
-          );
+          const response = await fetch(`${host}/api/autofill?q=${query}`);
           const data = await response.json();
           this.suggestions = data;
         } catch (error) {
@@ -97,7 +97,7 @@ export const useMovieStore = defineStore("movieStore", {
     },
     async fetchMovieById(id: number): Promise<Movie | null> {
       try {
-        const response = await fetch(`http://localhost:3001/api/movies/${id}`);
+        const response = await fetch(`${host}/api/movies/${id}`);
         if (!response.ok) {
           throw new Error("Movie not found");
         }

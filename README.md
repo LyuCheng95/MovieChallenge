@@ -14,8 +14,9 @@ You can visit the live version: http://34.143.135.18/
 ### Frontend
 
 1. Navigate to the frontend directory: `cd frontend`
-2. Install dependencies: `npm install`
-3. Start the server: `npm run dev`
+2. Change environment constant to dev if you want to test/dev locally: modify /frontend/src/config.ts: `export const dev: Env = dev;`
+3. Install dependencies: `npm install`
+4. Start the server: `npm run dev`
 
 The frontend application will be available at `http://localhost:5173`.
 
