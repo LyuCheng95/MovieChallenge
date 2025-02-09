@@ -78,7 +78,10 @@ const vClickOutside = {
     document.addEventListener("click", el.clickOutsideEvent);
   },
   unmounted(el: HTMLElement) {
-    document.removeEventListener("click", el.clickOutsideEvent);
+    if (el.clickOutsideEvent) {
+      document.removeEventListener("click", el.clickOutsideEvent);
+      delete el.clickOutsideEvent;
+    }
   },
 };
 
