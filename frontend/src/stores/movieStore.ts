@@ -95,11 +95,22 @@ export const useMovieStore = defineStore("movieStore", {
       this.searchResults = results;
       this.originalResults = [...results];
     },
+    async fetchMovieById(id: number): Promise<Movie | null> {
+      try {
+        const response = await fetch(`http://localhost:3001/api/movies/${id}`);
+        if (!response.ok) {
+          throw new Error("Movie not found");
+        }
+        let movie = await response.json();
+        this.movies.push(movie);
+        return movie;
+      } catch (error) {
+        console.error("Error fetching movie:", error);
+        return null;
+      }
+    },
   },
   getters: {
-    displayedMovies(): Movie[] {
-      return this.searchMovies();
-    },
     getMovieById: (state) => {
       return (id: number) =>
         state.movies.find((movie) => movie.id === id) || null;

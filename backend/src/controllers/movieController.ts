@@ -25,3 +25,18 @@ export const searchMovies = (req: Request, res: Response) => {
   const results = movieService.searchMovies(query);
   res.json(results);
 };
+
+export const getMovieById = (req: Request, res: Response): void => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    res.status(400).json({ error: "Invalid movie ID" });
+    return;
+  }
+
+  const movie = movieService.getMovieById(id);
+  if (movie) {
+    res.json(movie);
+  } else {
+    res.status(404).json({ error: "Movie not found" });
+  }
+};

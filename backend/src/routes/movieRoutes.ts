@@ -7,5 +7,6 @@ router.get("/movies/paged", movieController.getPagedMovies);
 router.get("/movies", movieController.getAllMovies);
 router.get("/movies/search", movieController.searchMovies);
 router.get("/autofill", movieController.getAutofillSuggestions);
+router.get("/movies/:id", movieController.getMovieById);
 
 export default router;

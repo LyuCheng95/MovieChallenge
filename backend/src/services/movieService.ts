@@ -64,3 +64,7 @@ export const getAutofillSuggestions = (query: string, limit: number) => {
     .slice(0, limit)
     .sort((a, b) => a.localeCompare(b));
 };
+
+export const getMovieById = (id: number): Movie | undefined => {
+  return moviePool.movies.find((movie) => movie.id === id);
+};

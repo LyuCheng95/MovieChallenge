@@ -44,7 +44,7 @@ const route = useRoute();
 const movie = ref<Movie | null>(null);
 const movieStore = useMovieStore();
 
-onMounted(() => {
+onMounted(async () => {
   const movieId = Number(route.params.id);
   if (isNaN(movieId)) {
     console.error("Invalid movie ID");
@@ -52,6 +52,9 @@ onMounted(() => {
   }
 
   movie.value = movieStore.getMovieById(movieId);
+  if (!movie.value) {
+    movie.value = await movieStore.fetchMovieById(movieId);
+  }
 });
 
 const handleImageError = (e: { target: { src: string } }) => {
