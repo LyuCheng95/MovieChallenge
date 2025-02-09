@@ -31,6 +31,11 @@
 </template>
 
 <script setup lang="ts">
+declare global {
+  interface HTMLElement {
+    clickOutsideEvent?: (event: Event) => void;
+  }
+}
 import { onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import debounce from "lodash/debounce";

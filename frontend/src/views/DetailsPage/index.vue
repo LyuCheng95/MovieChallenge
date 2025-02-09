@@ -57,8 +57,11 @@ onMounted(async () => {
   }
 });
 
-const handleImageError = (e: { target: { src: string } }) => {
-  e.target.src = placeholderImage;
+const handleImageError = (e: Event) => {
+  const target = e.target as HTMLImageElement;
+  if (target) {
+    target.src = placeholderImage;
+  }
 };
 </script>
 <style scoped>
