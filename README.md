@@ -23,9 +23,14 @@ The frontend application will be available at `http://localhost:5173`.
 ## Features
 
 - Home page with a movie carousel and hot movies section
+  - hot movies are ranked by total view counts of all users
 - Detailed movie information page
-- Search functionality with auto-suggestions
-- Search results page with genre filtering and year sorting
+- Advanced search functionality:
+  - Real-time auto-suggestions
+  - Search options (by genre, year, etc.)
+- Search results page with:
+  - Genre filtering
+  - Year-based sorting
 - Responsive design for various screen sizes
 
 ## API Endpoints
@@ -37,15 +42,24 @@ The backend provides the following API endpoints:
 - `GET /api/movies/search`: Search movies by query
 - `GET /api/autofill`: Get autofill suggestions for search
 - `GET /api/movies/:id`: Get details of a specific movie by ID
+- `POST /api/movie-view/:id`: Record one more view on a specific movie by ID
 
 ## Technologies Used
 
-- Frontend: Vue 3, Vue Router, Pinia, TypeScript
-- Backend: Node.js, Express, TypeScript
-- Shared: Custom npm package for type definitions (@lyuch000/movie-types)
-
-## Project Structure
-
-- `frontend/`: Contains the Vue.js frontend application
-- `backend/`: Contains the Express.js backend server
-- `packages/movie-types/`: Shared TypeScript definitions for movie data
+- Frontend:
+  - Vue 3 with Composition API
+  - Vue Router for navigation
+  - Pinia for state management
+  - TypeScript for type safety
+  - Axios for API requests
+- Backend:
+  - Node.js runtime
+  - Express.js framework
+  - TypeScript for type safety
+  - Mysql for database
+- Shared:
+  - Custom npm package for type definitions (@lyuch000/movie-types)
+- Development and Deployment:
+  - Vite for frontend build tool
+  - ESLint and Prettier for code linting and formatting
+  - Nginx for reverse proxy and serving static files
