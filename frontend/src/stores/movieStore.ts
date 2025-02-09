@@ -4,7 +4,7 @@ import type { SortOrder } from "../types/SortOrder";
 import { env } from "../config";
 
 const host =
-  env === "dev" ? "http://localhost:3001" : "https://34.143.135.18:3001";
+  env === "dev" ? "http://localhost:3001" : "https://movie-challenge.site";
 
 export const useMovieStore = defineStore("movieStore", {
   state: () => ({
