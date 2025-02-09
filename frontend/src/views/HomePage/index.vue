@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 import MovieCarousel from "./components/MovieCarousel.vue";
 import HotMovies from "./components/HotMovies.vue";
@@ -16,29 +16,32 @@ const movieStore = useMovieStore();
 const observer = ref<HTMLElement | null>(null);
 const movies = ref<any[]>([]);
 
+let intersectionObserver: IntersectionObserver | null = null;
+
 onMounted(async () => {
   movieStore.resetPagination();
   movies.value = await movieStore.fetchMovies();
 
-  const intersectionObserver = new IntersectionObserver(
+  intersectionObserver = new IntersectionObserver(
     async (entries) => {
       if (entries[0].isIntersecting && movieStore.hasMore) {
         const newMovies = await movieStore.fetchMovies();
         movies.value = newMovies;
       }
     },
-    { threshold: 1 },
+    { threshold: 0.1 },
   );
 
   if (observer.value) {
     intersectionObserver.observe(observer.value);
   }
+});
 
-  onUnmounted(() => {
-    if (observer.value) {
-      intersectionObserver.unobserve(observer.value);
-    }
-  });
+onUnmounted(() => {
+  if (intersectionObserver && observer.value) {
+    intersectionObserver.unobserve(observer.value);
+    intersectionObserver.disconnect();
+  }
 });
 </script>
 

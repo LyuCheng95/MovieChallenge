@@ -1,18 +1,47 @@
 import moviesData from "../../data/movies.json";
-import { Genres, Movie } from "@lyuch000/movie-types";
+import { Movie } from "@lyuch000/movie-types";
+import { pool } from "../config/database";
+import type { MovieView } from "../types/MovieView";
 
 const moviePool = moviesData as unknown as { movies: Movie[] };
+const dbPool = pool;
 
-export const getPagedMovies = (page: number, pageSize: number) => {
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const pagedMovies = moviePool.movies.slice(startIndex, endIndex);
+export const getPagedMovies = async (page: number, pageSize: number) => {
+  try {
+    const [viewCountsResult] = await dbPool.query<MovieView[]>(`
+      SELECT movie_id, view_count 
+      FROM movie_views
+      ORDER BY view_count DESC
+    `);
 
-  return {
-    movies: pagedMovies,
-    totalCount: moviePool.movies.length,
-    hasMore: endIndex < moviePool.movies.length,
-  };
+    const viewCountsMap = new Map(
+      viewCountsResult.map((row) => [row.movie_id, row.view_count])
+    );
+
+    const sortedMovies = moviePool.movies.sort((a, b) => {
+      const viewsA = viewCountsMap.get(a.id) || 0;
+      const viewsB = viewCountsMap.get(b.id) || 0;
+      return viewsB - viewsA;
+    });
+
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const pagedMovies = sortedMovies.slice(startIndex, endIndex);
+
+    const moviesWithViews = pagedMovies.map((movie) => ({
+      ...movie,
+      views: viewCountsMap.get(movie.id) || 0,
+    }));
+
+    return {
+      movies: moviesWithViews,
+      totalCount: sortedMovies.length,
+      hasMore: endIndex < sortedMovies.length,
+    };
+  } catch (error) {
+    console.error("Error fetching paged movies:", error);
+    throw error;
+  }
 };
 
 export const getAllMovies = () => {

@@ -55,6 +55,7 @@ onMounted(async () => {
   if (!movie.value) {
     movie.value = await movieStore.fetchMovieById(movieId);
   }
+  await movieStore.recordMovieView(movieId);
 });
 
 const handleImageError = (e: Event) => {

@@ -109,6 +109,18 @@ export const useMovieStore = defineStore("movieStore", {
         return null;
       }
     },
+    async recordMovieView(movieId: number) {
+      try {
+        const response = await fetch(`${host}/api/movie-view/${movieId}`, {
+          method: "POST",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to record movie view");
+        }
+      } catch (error) {
+        console.error("Error recording movie view:", error);
+      }
+    },
   },
   getters: {
     getMovieById: (state) => {

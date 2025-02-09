@@ -8,6 +8,7 @@ export type Movie = {
     actors: string;
     plot: string;
     posterUrl: string;
+    view?: number;
 };
 export declare enum Genres {
     Comedy = "Comedy",

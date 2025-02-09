@@ -1,8 +1,8 @@
 {
-    "prettier.configPath": "./prettierrc.json",
-    "marscode.chatLanguage": "cn",
-    "marscode.codeCompletionPro": {
-        "enableCodeCompletionPro": false
-    },
-    "marscode.enableInlineCommand": true
+  "prettier.configPath": "./prettierrc.json",
+  "marscode.chatLanguage": "cn",
+  "marscode.codeCompletionPro": {
+    "enableCodeCompletionPro": false
+  },
+  "marscode.enableInlineCommand": true
 }
