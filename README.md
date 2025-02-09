@@ -1,7 +1,7 @@
 # MovieChallenge
 
 MovieChallenge is a full-stack web application for movie enthusiasts to explore and search for their favorite films.
-You can visit the live version: http://34.143.135.18/
+You can visit the live version: https://movie-challenge.site
 
 ## Setup
 
